@@ -1,8 +1,12 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    db = require("./models"),
-    session = require("express-session"),
+    db = require('./models'),
+    session = require('express-session'),
+    path = require('path'),
     app = express();
+
+// views path
+var views = path.join(process.cwd(), "views");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -39,13 +43,10 @@ app.use(function (req, res, next) {
   next(); 
 });
 
-// views path
-var views = path.join(process.cwd(), "views");
-
 // login route
 app.get("/login", function (req, res) {
   // send the login page
-  res.sendFile(path.join(views,  "login"));
+  res.sendFile(path.join(views, "login.html"));
 });
 
 // signup route
