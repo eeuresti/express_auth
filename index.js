@@ -72,7 +72,7 @@ app.post(["/sessions", "/login"], function login(req, res) {
 // show the current user
 app.get("/profile", function userShow(req, res) {
   req.currentUser(function (err, user) {
-    res.send("hello" + user.email);
+    res.send("Hello " + user.email);
   })
 });
 
