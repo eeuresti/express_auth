@@ -22,6 +22,16 @@ app.post(["/users", "/signup"], function signup(req, res) {
   });
 });
 
+// where the user submits the login form
+app.post(["/sessions", "/login"], function login(req, res) {
+  var user = req.body.user;
+  var email = user.email;
+  var password = user.password;
+  db.User.authenticate(email, password, function (err, user) {
+    res.send(email + " is logged in\n");
+  });
+});
+
 var listener = app.listen(3000, function () {
   console.log("Listening on port " + listener.address().port);
 });
