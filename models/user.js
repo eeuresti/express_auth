@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
   email: {type: String, required: true},
   passwordDigest: {type: String, required: true},
-  createdAt: {type: Date, required: true}
+  createdAt: {type: Date, default: Date.now}
 });
 
 // create user model
