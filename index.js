@@ -1,9 +1,43 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     db = require("./models"),
+    session = require("express-session"),
     app = express();
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: true}));
+
+// create our session
+app.use(
+  session({
+    secret: 'super-secret-private-keyyy',
+    resave: false,
+    saveUninitialized: true
+  })
+);
+
+// extending the `req` object to help manage sessions
+app.use(function (req, res, next) {
+  // login a user
+  req.login = function (user) {
+    req.session.userId = user._id;
+  };
+  // find the current user
+  req.currentUser = function (cb) {
+    db.User.
+      findOne({ _id: req.session.userId },
+      function (err, user) {
+        req.user = user;
+        cb(null, user);
+      })
+  };
+  // logout the current user
+  req.logout = function () {
+    req.session.userId = null;
+    req.user = null;
+  }
+  // call the next middleware in the stack
+  next(); 
+});
 
 app.get("/signup", function (req, res) {
   res.send("Coming soon");
@@ -28,7 +62,10 @@ app.post(["/sessions", "/login"], function login(req, res) {
   var email = user.email;
   var password = user.password;
   db.User.authenticate(email, password, function (err, user) {
-    res.send(email + " is logged in\n");
+    // login the user
+    req.login(user);
+    // respond with a success message
+    res.send(email + " logged in!\n");
   });
 });
 
