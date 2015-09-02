@@ -18,7 +18,12 @@ UserSchema.statics.createSecure = function (email, password, cb) {
   bcrypt.genSalt(function (err, salt) {
     // hash the password with the salt
     bcrypt.hash(password, salt, function (err, hash) {
-      var user = { email: email, passwordDigest: hash };
+      // build the user object
+      var user = {
+        email: email,
+        passwordDigest: hash,
+        createdAt: Date.now()
+      };
       // create a new user in the db with hashed password and execute the callback when done
       _this.create(user, cb);
     });
