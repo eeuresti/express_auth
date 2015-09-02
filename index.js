@@ -64,9 +64,16 @@ app.post(["/sessions", "/login"], function login(req, res) {
   db.User.authenticate(email, password, function (err, user) {
     // login the user
     req.login(user);
-    // respond with a success message
-    res.send(email + " logged in!\n");
+    // redirect to user profile
+    res.redirect("/profile"); 
   });
+});
+
+// show the current user
+app.get("/profile", function userShow(req, res) {
+  req.currentUser(function (err, user) {
+    res.send("hello" + user.email);
+  })
 });
 
 var listener = app.listen(3000, function () {

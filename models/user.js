@@ -34,8 +34,7 @@ UserSchema.statics.createSecure = function (email, password, cb) {
 UserSchema.statics.authenticate = function (email, password, cb) {
   // find user by email entered at log in
   this.findOne({email: email}, function (err, user) {
-    console.log("found: " + user);
-
+    
     // throw error if can't find user
     if (user === null) {
       throw new Error('Can\'t find user with email ' + email);
