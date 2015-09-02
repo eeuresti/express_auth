@@ -39,6 +39,16 @@ app.use(function (req, res, next) {
   next(); 
 });
 
+// views path
+var views = path.join(process.cwd(), "views");
+
+// login route
+app.get("/login", function (req, res) {
+  // send the login page
+  res.sendFile(path.join(views,  "login"));
+});
+
+// signup route
 app.get("/signup", function (req, res) {
   res.send("Coming soon");
 });
@@ -72,7 +82,7 @@ app.post(["/sessions", "/login"], function login(req, res) {
 // show the current user
 app.get("/profile", function userShow(req, res) {
   req.currentUser(function (err, user) {
-    res.send("hello" + user.email);
+    res.send("Hello" + user.email);
   })
 });
 
