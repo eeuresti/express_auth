@@ -3,7 +3,7 @@ var express = require('express'),
     db = require("./models"),
     app = express();
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/signup", function (req, res) {
   res.send("Coming soon");
