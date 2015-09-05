@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
     req.user = null;
   }
   // call the next middleware in the stack
-  next(); 
+  next();
 });
 
 app.get("/signup", function (req, res) {
@@ -65,7 +65,7 @@ app.post(["/sessions", "/login"], function login(req, res) {
     // login the user
     req.login(user);
     // redirect to user profile
-    res.redirect("/profile"); 
+    res.redirect("/profile");
   });
 });
 
