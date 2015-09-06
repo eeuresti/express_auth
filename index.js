@@ -32,15 +32,15 @@ app.use(function (req, res, next) {
       function (err, user) {
         req.user = user;
         cb(null, user);
-      })
+      });
   };
   // logout the current user
   req.logout = function () {
     req.session.userId = null;
     req.user = null;
-  }
+  };
   // call the next middleware in the stack
-  next(); 
+  next();
 });
 
 // login route
@@ -76,7 +76,7 @@ app.post(["/sessions", "/login"], function login(req, res) {
     // login the user
     req.login(user);
     // redirect to user profile
-    res.redirect("/profile"); 
+    res.redirect("/profile");
   });
 });
 
@@ -84,7 +84,7 @@ app.post(["/sessions", "/login"], function login(req, res) {
 app.get("/profile", function userShow(req, res) {
   req.currentUser(function (err, user) {
     res.send("Hello " + user.email);
-  })
+  });
 });
 
 var listener = app.listen(3000, function () {
